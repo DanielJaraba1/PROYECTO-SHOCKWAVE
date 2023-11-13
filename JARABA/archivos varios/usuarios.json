@@ -1,0 +1,5 @@
+{
+	"usuarios": [
+		{"ID":50,"nombre":"juaninto","correo":"juaninto@gmail.com","contraseña":"1234","rol":0}
+	]
+}
