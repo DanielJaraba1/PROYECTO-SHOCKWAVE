@@ -5,7 +5,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $base = 'root';
    $contraseña = '';
 
-   if(isset($_POST['archivo'])){
+   if(!empty($_POST['delt_usua'])){
+
+        try{
+            $cadena_conexion = 'mysql:dbname=redsocial;host=127.0.0.1';
+            $base = 'root';
+            $contraseña = '';
+      
+            $bd = new PDO($cadena_conexion, $base, $contraseña);
+            $ins = "DELETE FROM usuario WHERE nombre_usuario = '".$_POST['delt_usua']."';";
+            $insert = $bd->query($ins);
+        
+    }catch (PDOException $e) {
+        echo 'Error con la base de datos: ' . $e->getMessage();
+        }
+ }else if(empty($_POST['delt_usua']) && empty($_POST['busqueda'])){
     $string_json = file_get_contents($_FILES["archivo"]["tmp_name"]);
     $objeto_json = json_decode($string_json);
     if($objeto_json === null){
@@ -63,21 +77,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo 'Error con la base de datos: ' . $e->getMessage();
         }
       }
-     }else{
-        try{
-            $cadena_conexion = 'mysql:dbname=redsocial;host=127.0.0.1';
-            $base = 'root';
-            $contraseña = '';
-      
-            $bd = new PDO($cadena_conexion, $base, $contraseña);
-            $ins = "DELETE FROM usuario WHERE nombre_usuario = '".$_POST['delt_usua']."';";
-            $insert = $bd->query($ins);
-        
-    }catch (PDOException $e) {
-        echo 'Error con la base de datos: ' . $e->getMessage();
-        }
+     }
  }
-}
+
 
 
 ?>
